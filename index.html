@@ -8,12 +8,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stuff Inventory</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Seymour+One&display=swap" rel="stylesheet">
+
     <!-- Materialize CSS and Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <title>Smart To Do List</title>
 </head>
+<style>
+  html {
+    background-color: #c5cae9;
+  } 
+  a.btn{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  h1 {
+            font-family: 'Seymour One', sans-serif;
+        }
+  div.container {
+    border-radius: 25px;
+    padding: 20px;
+    background-color: #9fa8da;
+    border: 5px skyblue;
+  }
+  #img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50px;
+    padding: 20px;
+    background-color: #9fa8da;
+    border: 5px skyblue;
+  }
+  #intro{
+    font-size: 50px;
+  }
+</style>
 
 <body>
     <div class = "container">
@@ -22,59 +56,28 @@
     <!-- Page Layout here -->
     <div class="row">
 
-        <div class="col s3">
+        <div class="col s3 black blue-text">
           <!-- Grey navigation panel -->
         </div>
   
-        <div class="col s9 black">
+        <div class="col s9 black purple-text">
           <!-- Teal page content  -->
         </div>
   
-      </div>
-        <h1>COLORS</h1>
-        <div class="black pink-text">Div with color class</div>
-        <div class="black blue-text">Div with color class</div>
-        <div class="black deep-purple-text">Div with color class</div>
-        
-        <h1>BUTTONS</h1>
-        <button class="btn">Read More</button>
-        <button class="btn waves-effect">Read More</button>
-    
-    </div>
-
     <!-- Actual page content! -->
     <div class="container">
-        <h1>Welcome!</h1>
-        <h2>Let's manage your life.</h2>
+        <center><h1 >Welcome!</h1></center>
+        <center><h2 id = intro>Let's manage your life.</h2></center>
             <a class="btn" href="page3.html">
                 <i class="material-icons right">arrow_forward</i>
                 Add/Remove from your list!
             </a>
+            <br></br>
             <a class="btn" href="page2.html">
                 <i class="material-icons right">arrow_forward</i>
-                See your current To Dos!
+                See the Details of your To Dos
             </a>
 
-          <!-- Modal Trigger -->
-  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
-        
-          
-    </div>
-
-</body>
-
-<script>
-    <!-- Modal Structure -->
-        <div id="modal1" class="modal">
-            <div class="modal-content">
-            <h4>Modal Header</h4>
-            <p>A bunch of text</p>
-            </div>
-            <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-            </div>
-        </div>
-</script>
+            <img id = img src="https://imageio.forbes.com/specials-images/dam/imageserve/1092571024/0x0.jpg?format=jpg&width=1200" alt="Flowers in Chania" width="460" height="345">
 
 </html>

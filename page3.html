@@ -9,15 +9,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stuff Inventory</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Seymour+One&display=swap" rel="stylesheet">
+
     <!-- Materialize CSS and Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style>
+        html {
+            background-color: #c5cae9;
+        }
+
         form {
             border: solid 2px pink;
             padding: 10px;
             border-radius: 5px;
+        }
+
+        h1 {
+            font-family: 'Seymour One', sans-serif;
         }
 
         form:focus-within {
@@ -37,11 +47,14 @@
     <div class="container">
         <div class="section" id="stuffList">
 
-            <a class="btn" href="page2.html">
-                <i class="material-icons home">home</i>
+            <a class="btn" href="index.html">
+                <i class="material-icons">home</i>
                 Return to Home
             </a>
-
+            <a class="btn" href="page2.html">
+                <i class="material-icons right">arrow_forward</i>
+                See the Details of your To Dos
+            </a>
             <h1>To do list:</h1>
             <table>
                 <thead>
@@ -49,7 +62,9 @@
                     <tr>
                         <th>Item</th>
                         <th>Time</th>
-                        <th></th>
+                        <th>Difficulty</th>
+                        <th>Instructions</th>
+
                     </tr>
 
                 </thead>
@@ -58,6 +73,8 @@
                     <tr>
                         <td>Make your bed</td>
                         <td>5:00 AM</td>
+                        <td>Easy</td>
+                        <td>N/A</td>
                         <td>
                             <a class="btn-small waves-effect waves-light" href="item.html">
                                 <i class="material-icons right">edit</i>
@@ -72,7 +89,9 @@
 
                     <tr>
                         <td>Take out the trash</td>
-                        <td>3:00 PM</td>
+                        <td>9:00 AM</td>
+                        <td>Easy</td>
+                        <td>N/A</td>
                         <td>
                             <a class="btn-small waves-effect waves-light" href="item.html">
                                 <i class="material-icons right">edit</i>
@@ -84,13 +103,124 @@
                             </a>
                         </td>
                     </tr>
+                    <tr>
+                        <td>Cook spaghetti dinner</td>
+                        <td>6:30 PM</td>
+                        <td>Hard</td>
+                        <td><a href="https://lilluna.com/spaghetti-recipe/">Recipe</a></td>
+                        <td>
+                            <a class="btn-small waves-effect waves-light" href="item.html">
+                                <i class="material-icons right">edit</i>
+                                Info/Edit
+                            </a>
+                            <a class="btn-small waves-effect waves-light red">
+                                <i class="material-icons right">delete</i>
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="modal" id="stuffEdit">
+
+                                <div class="modal-content">
+
+                                    <h2>Edit item:</h2>
+                                    <form>
+                                        <div class="row">
+                                            <div class="input-field col s6">
+                                                <label for="nameInput">Item Name:</label>
+                                                <input type="text" name="name" id="nameInput" class="validate"
+                                                    data-length="32" required>
+                                            </div>
+                                            <div class="input-field col s6">
+                                                <label for="quantityInput">Time</label>
+                                                <input type="time" name="quantity" id="quantityInput" value=1 required>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <label for="descriptionInput">Item Description:</label>
+                                                <input type="text" name="description" id="descriptionInput"
+                                                    data-length="100">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn waves-effect waves-light " type="submit">
+                                                <i class="material-icons right">send</i>
+                                                Submit
+                                            </button>
+                                            <button class="modal-close waves-effect waves-green btn-flat">Never
+                                                Mind</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+
+                            <!-- Modal Trigger -->
+                            <button data-target="modal1" class="btn modal-trigger">
+                                <i class="material-icons">add_circle_outline</i>
+                                Add a to do
+                            </button>
+
+                            <!-- Modal Structure -->
+                            <div id="modal1" class="modal">
+                                <div class="modal-content">
+                                    <h2>Add a to do:</h2>
+                                    <form>
+                                        <div class="row">
+                                            <div class="input-field col s6">
+                                                <label for="nameInput">Item</label>
+                                                <input type="text" name="name" id="nameInput" class="validate"
+                                                    data-length="32" required>
+                                            </div>
+                                            <div class="input-field col s6">
+                                                <label for="quantityInput">Time</label>
+                                                <input type="time" name="quantity" id="quantityInput" value=0 required>
+                                            </div>
+                                            <div class="input-field col s6">
+                                                <label for="quantityInput">Difficulty</label>
+                                                <!--<input type="time" name="quantity" id="quantityInput" value=1 required>-->
+                                                    <!-- Dropdown Trigger -->
+                                                <br></br>
+                                                <a class='dropdown-trigger btn' href='#dropdown1'>Choose</a>
+
+                                                <!-- Dropdown Structure -->
+                                                <ul id='dropdown1' class='dropdown-content'>
+                                                    <li><a href="#!">Easy</a></li>
+                                                    <li class="divider" tabindex="-1"></li>
+                                                    <li><a href="#!">Medium</a></li>
+                                                    <li class="divider" tabindex="-1"></li>
+                                                    <li><a href="#!">Hard</a></li>
+                                                    
+                                                    
+                                            </div>
+                                            <div class="input-field col s6">
+                                                <label for="quantityInput">Instructions</label>
+                                                <input type="url" name="quantity" id="quantityInput" not
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <button class="btn waves-effect waves-light" type="submit">
+                                            <i class="material-icons right">send</i>
+                                            Submit
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
                 </tbody>
             </table>
         </div>
 
-        <a></a>
-
+<!--INPUT VERSION OF ADD TO DO
         <div class="section" id="stuffAdd">
             <h2>Add a to do:</h2>
             <form>
@@ -111,6 +241,7 @@
             </form>
         </div>
     </div>
+-->
 
     <!-- Materialize JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
