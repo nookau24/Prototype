@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="/stylesheets/stuffStyle.css">
+    form {
+        border: solid 2px lightgrey;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    form:focus-within {
+        border-color: orange;
+    }
+
+    tr:hover {
+        background-color: #F0F0F0;
+    }
+</link rel="stylesheet" href="/stylesheets/stuffStyle.css">
