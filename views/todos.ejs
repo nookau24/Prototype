@@ -43,8 +43,55 @@
 </head>
 
 <body>
+<!-- Actual page content! -->
+<div class="container">
+    <div class="section flow-text" id="stuffDetail">
+        <h1>Stuff details:</h1>
+        <a class="btn-small waves-effect waves-light" href="/inventory">
+            <i class="material-icons left">arrow_back</i>Return to Inventory
+        </a>
+        <a class="btn-small waves-effect waves-light" href="/inventory/todos/1">
+            <i></i>Go to task 1
+        </a>
+        <a class="btn-small waves-effect waves-light" href="/inventory/todos/2">
+            <i></i>Go to task 2
+        </a>
+        <a class="btn-small waves-effect waves-light" href="/inventory/todos/3">
+            <i></i>Go to task 3
+        </a>
+        <table>
+            <tr>
+                <th>Item:</th>
+                <td><%= item %></td>
+            </tr>
+            <tr>
+                <th>Time:</th>
+                <td><%= time %></td>
 
-    <!-- Actual page content! -->
+            </tr>
+            <tr>
+                <th>Difficulty:</th>
+                <td><%= difficulty %></td>
+
+            </tr>
+            <tr>
+                <th>Instructions:</th>
+                <td><%= instructions %></td>
+
+            </tr>
+            <tr>
+                <th>Key Focus Area(s):</th>
+                <td><%= keyfocusarea %></td>
+            </tr>
+            <tr>
+                <th>Description:</th>
+                <td>
+                    <%= description %>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- Actual page content!
     <div class="container">
         <div class="section flow-text" id="stuffDetail">
             <a class="btn" href="/">
@@ -152,7 +199,7 @@
                   </span></div>
                 </li>
               </ul>
-        </div>
+        </div> -->
 
         <div class="section" id="stuffControls">
             <a class="btn-large waves-effect waves-light orange left modal-trigger" href="/inventory">
