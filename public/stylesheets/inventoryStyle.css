@@ -1,0 +1,21 @@
+html {
+    background-color: #c5cae9;
+}
+
+form {
+    border: solid 2px pink;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+h1 {
+    font-family: 'Seymour One', sans-serif;
+}
+
+form:focus-within {
+    border-color: orange;
+}
+
+tr:hover {
+    background-color: indigo lighten-4;
+}
