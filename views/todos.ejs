@@ -50,7 +50,7 @@
         <a class="btn-small waves-effect waves-light" href="/inventory">
             <i class="material-icons left">arrow_back</i>Return to Inventory
         </a>
-        <a class="btn-small waves-effect waves-light" href="/inventory/todos/1">
+        <!-- <a class="btn-small waves-effect waves-light" href="/inventory/todos/1">
             <i></i>Go to task 1
         </a>
         <a class="btn-small waves-effect waves-light" href="/inventory/todos/2">
@@ -58,7 +58,7 @@
         </a>
         <a class="btn-small waves-effect waves-light" href="/inventory/todos/3">
             <i></i>Go to task 3
-        </a>
+        </a> -->
         <table>
             <tr>
                 <th>Item:</th>
@@ -202,10 +202,15 @@
         </div> -->
 
         <div class="section" id="stuffControls">
-            <a class="btn-large waves-effect waves-light orange left modal-trigger" href="/inventory">
+            <!-- <a class="btn-large waves-effect waves-light orange left modal-trigger" href="/inventory">
                 <i class="material-icons right">edit</i>
                 Edit
-            </a>
+            </a> -->
+            <!-- Modal Trigger -->
+            <button data-target="modal1" class="btn-large waves-effect waves-light orange left modal-trigger" href="/inventory">
+                <i class="material-icons right">edit</i>
+                Edit
+            </button>
             <a class="btn-large waves-effect waves-light red right" href="/inventory/todos/<%= id %>/delete">
                 <i class="material-icons right">delete</i>
                 Delete
@@ -213,64 +218,65 @@
         </div>
 
 
-        <div class="modal" id="stuffEdit">
+        
+                <!-- Modal Structure -->
+                <div id="modal1" class="modal">
+                    <div class="modal-content">
+                        <form method="post" action="/inventory/todos/<%=id%>">
+                        <h2>Edit a to do:</h2>
 
-            <div class="modal-content">
-
-                <h2>Edit item:</h2>
-                <form method="post" action="/inventory/todos/<%= id%>">
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <label for="nameInput">Item:</label>
-                            <input type="text" name="name" id="nameInput" class="validate" data-length="32" value="<%= item%>" required>
-                        </div>
-                        <div class="input-field col s6">
-                            <label for="quantityInput">Time</label>
-                            <input type="time" name="time" id="timeInput" value=<%= time%> required>
-                        </div>
-                        <div class="input-field col s6">
-                            <label for="quantityInput">Difficulty</label>
-                            <!--<input type="time" name="quantity" id="quantityInput" value=1 required>-->
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input type="text" name="name" id="nameInput" class="validate" data-length="32"
+                                    required>
+                                    <label for="nameInput">Item</label>
+                                </div>
+                            <div class="input-field col s6">
+                                <input type="text" name="time" id="timeInput" class="validate" data-length="32"
+                                    required>
+                                    <label for="timeInput">Time</label>
+                                    <!-- <input type="name" name="quantity" id="quantityInput" value=1 required> -->
+                            </div>
+                            <div class="input-field col s6">
+                                <input type="text" name="difficulty" id="quantityInput" value=1 required>
+                                <label for="quantityInput">Difficulty</label>
                                 <!-- Dropdown Trigger -->
-                            <br></br>
-                            <a class='dropdown-trigger btn' href='#dropdown1'>Choose</a>
+                                <!-- <br></br>
+                                                <a class='dropdown-trigger btn' href='#dropdown1'>Choose</a>
 
-                            <!-- Dropdown Structure -->
-                            <ul id='dropdown1' class='dropdown-content'>
-                                <li><a href="#!">Easy</a></li>
-                                <li class="divider" tabindex="-1"></li>
-                                <li><a href="#!">Medium</a></li>
-                                <li class="divider" tabindex="-1"></li>
-                                <li><a href="#!">Hard</a></li>
-                                
-                                
+                                                
+                                                <ul id='dropdown1' class='dropdown-content'>
+                                                    <li><a href="#!">Easy</a></li>
+                                                    <li class="divider" tabindex="-1"></li>
+                                                    <li><a href="#!">Medium</a></li>
+                                                    <li class="divider" tabindex="-1"></li>
+                                                    <li><a href="#!">Hard</a></li> -->
+
+
+                            </div>
+                            <div class="input-field col s6">
+                                <input type="url" name="instructions" id="instructionsInput" >
+                                <label for="instructionsInput">Instructions</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input type="text" name="keyfocusarea" id="keyfocusareaInput" >
+                                <label for="keyfocusareaInput">Key Focus Area(s)</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input type="text" name="description" id="descriptionInput" >
+                                <label for="descriptionInput">Description</label>
+                            </div>
                         </div>
-                        <div class="input-field col s6">
-                            <label for="quantityInput">Instructions</label>
-                            <input type="url" name="instructions" id="instructionsInput" value="<%= instructions%>"not
-                                required>
-                        </div>
-                        <div class="input-field col s6">
-                            <label for="quantityInput">Key Focus Area(s)</label>
-                            <input type="text" name="keyfocusarea" id="keyfocusareaInput" value="<%= keyfocusarea%>"not
-                                required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <label for="descriptionInput">Item Description:</label>
-                            <input type="text" name="description" id="descriptionInput" value="<%= description%>"data-length="100">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn waves-effect waves-light " type="submit">
+                        <button class="btn waves-effect waves-light" type="submit">
                             <i class="material-icons right">send</i>
                             Submit
                         </button>
-                        <button class="modal-close waves-effect waves-green btn-flat">Never Mind</button>
+                        </form>
                     </div>
-                </form>
-            </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                    </div>
+                </div>
 
         </div>
     </div>
@@ -279,7 +285,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <!-- initialize Materialize elements -->
-    <script> M.AutoInit();</script>
+    <script src="/scripts/materializeAutoinit.js"></script>
 
 </body>
 

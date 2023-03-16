@@ -18,6 +18,7 @@ const create_stuff_table_sql = `
         instructions VARCHAR(45) NOT NULL,
         keyfocusarea VARCHAR(45) NOT NULL,
         description VARCHAR(150) NULL,
+        userid VARCHAR(50) NULL,
         PRIMARY KEY (id)
     );
 `

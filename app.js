@@ -1,28 +1,51 @@
 //set up the server
-
-const db = require('./db/db_connection');
 const express = require( "express" );
-const app = express();
 const logger = require("morgan");
-const { auth } = require('express-openid-connect');
-const port = 80;
 
-// Configure Express to use EJS
+const {auth} = require('express-openid-connect');
+//console.log(auth); // undefined
+
+const {requiresAuth } = require('express-openid-connect');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const helmet = require("helmet"); 
+const db = require('./db/db_pool');
+const app = express();
+const port = process.env.PORT || 80;
+
+// Configure Express to use EJS - not placed here in example code!
 app.set( "views",  __dirname + "/views");
 app.set( "view engine", "ejs" );
+
+//Configure Express to use certain HTTP headers for security
+//Explicitly set the CSP to allow certain sources
+app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", 'cdnjs.cloudflare.com']
+      }
+    }
+  })); 
 
 const config = {
     authRequired: false,
     auth0Logout: true,
-    secret: 'a long, randomly-generated string stored in env',
-    baseURL: 'http://localhost:80',
-    clientID: 'OQgmId5jWL3aiuKaYUVt8tVkE95w1XZF',
-    issuerBaseURL: 'https://dev-fzmq06eihcdot3e8.us.auth0.com'
+    secret: process.env.AUTH0_SECRET,
+    baseURL: process.env.AUTH0_BASE_URL,
+    clientID: process.env.AUTH0_CLIENT_ID,
+    issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL
   };
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 // middleware - function that runs for every request that comes in
 app.use(auth(config));
+
+// Configure Express to parse incoming JSON data
+// app.use( express.json() );
+// Configure Express to parse URL-encoded POST request bodies (traditional forms)
+app.use( express.urlencoded({ extended: false }) );
 
 // define middleware that logs all incoming requests
 app.use(logger("dev"));
@@ -30,13 +53,22 @@ app.use(logger("dev"));
 // define middleware that serves static resources in the public directory
 app.use(express.static(__dirname + '/public'));
 
-// Configure Express to parse URL-encoded POST request bodies (traditional forms)
-app.use( express.urlencoded({ extended: false }) );
+// define middleware that appends useful auth-related information to the res object
+// so EJS can easily access it
+app.use((req, res, next) => {
+    res.locals.isLoggedIn = req.oidc.isAuthenticated();
+    res.locals.user = req.oidc.user;
+    next();
+})
 
 // req.isAuthenticated is provided from the auth router
 app.get('/authtest', (req, res) => {
     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
   });
+
+ app.get('/profile', requiresAuth(), (req, res) => {
+     res.send(JSON.stringify(req.oidc.user));
+   });
 
 // define a route for the default home page
 app.get( "/", ( req, res ) => {
@@ -52,9 +84,11 @@ const read_stuff_all_sql = `
         id, item, time, difficulty, instructions
     FROM
         inventory
+    WHERE
+        userid = ?
 `
-app.get( "/inventory", ( req, res ) => {
-    db.execute(read_stuff_all_sql, (error, results) => {
+app.get( "/inventory", requiresAuth(), ( req, res ) => {
+    db.execute(read_stuff_all_sql, [req.oidc.user.email], (error, results) => {
         if (error)
             res.status(500).send(error); //Internal Server Error
         else
@@ -70,9 +104,11 @@ const read_stuff_item_sql = `
         inventory
     WHERE
         id = ?
+    AND
+        userid = ?
 `
-app.get( "/inventory/todos/:id", ( req, res ) => {
-    db.execute(read_stuff_item_sql, [req.params.id], (error, results) => {
+app.get( "/inventory/todos/:id", requiresAuth(), ( req, res ) => {
+    db.execute(read_stuff_item_sql, [req.params.id, req.oidc.user.email], (error, results) => {
         if (error)
             res.status(500).send(error); //Internal Server Error
         else if (results.length == 0)
@@ -80,6 +116,7 @@ app.get( "/inventory/todos/:id", ( req, res ) => {
         else {
             let data = results[0]; // results is still an array
             // data's object structure: 
+            console.log(data);
             //  { item: ___ , quantity:___ , description: ____ }
             res.render('todos', data);
         }
@@ -93,9 +130,11 @@ const delete_item_sql = `
         inventory
     WHERE
         id = ?
+    AND
+        userid = ?
 `
-app.get("/inventory/todos/:id/delete", ( req, res ) => {
-    db.execute(delete_item_sql, [req.params.id], (error, results) => {
+app.get("/inventory/todos/:id/delete", requiresAuth(), ( req, res ) => {
+    db.execute(delete_item_sql, [req.params.id, req.oidc.user.email], (error, results) => {
         if (error)
             res.status(500).send(error); //Internal Server Error
         else {
@@ -124,23 +163,6 @@ app.get("/inventory/todos/:id/delete", ( req, res ) => {
 //     res.sendFile( __dirname + "/views/todos.html" );
 // } );
 
-// define a route for item Create
-const create_item_sql = `
-    INSERT INTO inventory
-        (item, time, difficulty, instructions)
-    VALUES
-        (?, ?, ?, ?)
-`
-app.post("/inventory", ( req, res ) => {
-    db.execute(create_item_sql, [req.body.item, req.body.time, req.body.difficulty, req.body.instructions], (error, results) => {
-        if (error)
-            res.status(500).send(error); //Internal Server Error
-        else {
-            //results.insertId has the primary key (id) of the newly inserted element.
-            res.redirect(`/inventory/todos/${results.insertId}`);
-        }
-    });
-})
 
 // define a route for item UPDATE
 const update_item_sql = `
@@ -155,9 +177,12 @@ const update_item_sql = `
         description = ?
     WHERE
         id = ?
+    AND
+        userid = ?
 `
 app.post("/inventory/todos/:id", ( req, res ) => {
-    db.execute(update_item_sql, [req.body.item, req.body.time, req.body.difficulty, req.body.instructions, req.body.keyfocusarea, req.body.description, req.params.id], (error, results) => {
+    db.execute(update_item_sql, [req.body.name, req.body.time, req.body.difficulty, req.body.instructions, req.body.keyfocusarea, req.body.description, req.params.id, req.oidc.user.email], (error, results) => {
+        // console.log(error ? error : results)
         if (error)
             res.status(500).send(error); //Internal Server Error
         else {
@@ -165,6 +190,27 @@ app.post("/inventory/todos/:id", ( req, res ) => {
         }
     });
 })
+
+// define a route for item Create
+const create_item_sql = `
+    INSERT INTO inventory
+        (item, time, difficulty, instructions, userid)
+    VALUES
+        (?, ?, ?, ?, ?)
+`
+app.post("/inventory", ( req, res ) => {
+    console.log(req.body);
+    //res.send("hi");
+    db.execute(create_item_sql, [req.body.name, req.body.time, req.body.difficulty, req.body.instructions, req.oidc.user.email], (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else {
+            //results.insertId has the primary key (id) of the newly inserted element.
+            res.redirect(`/inventory/todos/${results.insertId}`);
+        }
+    });
+})
+
 
 
 // start the server

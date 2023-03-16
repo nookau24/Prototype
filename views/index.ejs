@@ -8,9 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
 
     <title>Stuff Inventory</title>
 
@@ -20,6 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <link rel = "stylesheet" href="/stylesheets/stuffStyle.css">
     <title>Smart To Do List</title>
 </head>
 <style>
@@ -55,7 +53,50 @@
   }
 </style>
 
+
 <body>
+  ...
+</head>
+<body>
+    <!-- Nav bar -->
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo">Stuff Manager</a>
+                <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <!-- Main nav, hidden for small screens -->
+                <ul id="desktop-nav" class="right hide-on-med-and-down">
+                    <li><a href="/"><i class="material-icons left">home</i>Home</a></li>
+                    <li><a href="/inventory"><i class="material-icons left">list</i>Inventory</a></li>
+                    
+                    <% if (isLoggedIn) { %>
+                      <li><a href="/profile"><i class="material-icons left">person</i> Hello, <%=user.name%></a> </li>
+                      <li><a href="/logout" class="btn red">Logout</a></li>
+                    <% } else { %>
+                      <li><a href="/login" class="btn blue">Login</a></li>
+                    <% } %>
+
+                </ul>
+            </div>
+        </nav>
+        <!-- Mobile nav menu, shown when menu button clicked -->
+        <ul id="mobile-nav" class="sidenav">
+            <li><a href="/"><i class="material-icons left">home</i>Home</a></li>
+            <li><a href="/inventory"><i class="material-icons left">list</i>Inventory</a></li>
+            
+            <% if (isLoggedIn) { %>
+              <li><a href="/profile"><i class="material-icons left">person</i> Hello, <%=user.name%></a> </li>
+              <li><a href="/logout" class="btn red">Logout</a></li>
+            <% } else { %>
+              <li><a href="/login" class="btn blue">Login</a></li>
+            <% } %>
+        </ul>
+    </header>
+
+    <!-- rest of the body -->
+    <div class="container">
+      ...
+
     <div class = "container">
     <!-- Navbar goes here -->
  
@@ -74,17 +115,24 @@
     <div class="container">
         <center><h1 >Welcome!</h1></center>
         <center><h2 id = intro>Let's manage your life.</h2></center>
+        <center><img src="/images/todolist.jpg" width="700" 
+          height="600"></center>
             <a class="btn" href="/inventory">
                 <i class="material-icons right">arrow_forward</i>
-                Add/Remove from your list!
+                Add/Remove from the list!
             </a>
             <br></br>
-            <a class="btn" href="/inventory/todos/">
+            <!-- <a class="btn" href="/inventory/todos/">
                 <i class="material-icons right">arrow_forward</i>
                 See the Details of your To Dos
-            </a>
+            </a> -->
 
-            <img id = img src="https://imageio.forbes.com/specials-images/dam/imageserve/1092571024/0x0.jpg?format=jpg&width=1200" alt="Flowers in Chania" width="460" height="345">
-            <img src="/images/sunblast.jpg">
+            <!--<img id = img src="https://imageio.forbes.com/specials-images/dam/imageserve/1092571024/0x0.jpg?format=jpg&width=1200" alt="Flowers in Chania" width="460" height="345">-->
+            
+                            <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- initialize Materialize elements -->
+    <script src="/scripts/materializeAutoinit.js"></script>
 
 </html>
