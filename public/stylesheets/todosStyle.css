@@ -11,6 +11,11 @@ form {
 h1 {
     font-family: 'Seymour One', sans-serif;
 }
+div.container {
+    border-radius: 25px;
+    padding: 20px;
+    background-color: #9fa8da;
+  }
 
 form:focus-within {
     border-color: orange;
