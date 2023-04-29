@@ -6,7 +6,7 @@ const drop_assignments_table_sql = "DROP TABLE IF EXISTS assignments;"
 
 db.execute(drop_assignments_table_sql);
 
-const drop_subjects_table_sql = "DROP TABLE IF EXISTS subjects;"
+const drop_subjects_table_sql = "DROP TABLE IF EXISTS categories;"
 
 db.execute(drop_subjects_table_sql);
 

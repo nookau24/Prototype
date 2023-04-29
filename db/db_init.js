@@ -3,14 +3,14 @@ const db = require("./db_connection");
 
 /**** Delete existing table, if any ****/
 
-const drop_stuff_table_sql = "DROP TABLE IF EXISTS `inventory`;"
+const drop_assignments_table_sql = "DROP TABLE IF EXISTS `assignments`;"
 
-db.execute(drop_stuff_table_sql);
+db.execute(drop_assignments_table_sql);
 
 /**** Create "stuff" table (again)  ****/
 
-const create_stuff_table_sql = `
-    CREATE TABLE inventory (
+const create_assignments_table_sql = `
+    CREATE TABLE assignemnts (
         id INT NOT NULL AUTO_INCREMENT,
         item VARCHAR(45) NOT NULL,
         time VARCHAR(45) NOT NULL,
@@ -22,12 +22,12 @@ const create_stuff_table_sql = `
         PRIMARY KEY (id)
     );
 `
-db.execute(create_stuff_table_sql);
+db.execute(create_assignments_table_sql);
 
 /**** Create some sample items ****/
 
-const insert_stuff_table_sql = `
-    INSERT INTO inventory 
+const insert_assignments_table_sql = `
+    INSERT INTO assignments 
         (id, item, time, difficulty, instructions, keyfocusarea, description) 
     VALUES 
         (?, ?, ?, ?, ?, ?, ?);
@@ -40,14 +40,14 @@ db.execute(insert_stuff_table_sql, [3, 'Cook spaghetti dinner', '6:30PM', 'Hard'
 
 /**** Read the sample items inserted ****/
 
-const read_stuff_table_sql = "SELECT * FROM inventory";
+const read_assignments_table_sql = "SELECT * FROM assignments";
 
-db.execute(read_stuff_table_sql, 
+db.execute(read_assignments_table_sql, 
     (error, results) => {
         if (error) 
             throw error;
 
-        console.log("Table 'inventory' initialized with:")
+        console.log("Table 'assignments' initialized with:")
         console.log(results);
     }
 );
