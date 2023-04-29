@@ -6,9 +6,9 @@ SET
     difficulty = ?,
     instructions = ?,
     keyfocusarea = ?,
-    description
+    description = ?
 
 WHERE
     assignmentId = ?
 AND
-    id = ?
+    userId = ?
