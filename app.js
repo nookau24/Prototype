@@ -1,6 +1,11 @@
+const DEBUG = true;
+
 //set up the server
 const express = require( "express" );
 const logger = require("morgan");
+
+const path = require("path");
+const fs = require("fs");
 
 const {auth} = require('express-openid-connect');
 //console.log(auth); // undefined
@@ -11,11 +16,13 @@ dotenv.config();
 
 const helmet = require("helmet"); 
 const db = require('./db/db_pool');
+// const db = require('./db/db_connection'); just assuming this is an older version of the above line
 const app = express();
 const port = process.env.PORT || 80;
+// ta port is 3000
 
 // Configure Express to use EJS - not placed here in example code!
-app.set( "views",  __dirname + "/views");
+app.set( "views",  path.join(__dirname + "/views"));
 app.set( "view engine", "ejs" );
 
 //Configure Express to use certain HTTP headers for security
@@ -51,7 +58,7 @@ app.use( express.urlencoded({ extended: false }) );
 app.use(logger("dev"));
 
 // define middleware that serves static resources in the public directory
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname + '/public')));
 
 // define middleware that appends useful auth-related information to the res object
 // so EJS can easily access it
@@ -84,6 +91,9 @@ const read_stuff_all_sql = `
         id, item, time, difficulty, instructions
     FROM
         inventory
+
+    JOIN details
+            ON inventory.category_id = details.category_id
     WHERE
         userid = ?
 `
@@ -211,7 +221,11 @@ app.post("/inventory", ( req, res ) => {
     });
 })
 
+// let assignmentsRouter = require("./views/assignments.ejs");
+// app.use("/assignments", requiresAuth(), assignmentsRouter);
 
+// let categoriesRouter = require("./views/categories.ejs");
+// app.use("/categories", requiresAuth(), categoriesRouter);
 
 // start the server
 app.listen( port, () => {

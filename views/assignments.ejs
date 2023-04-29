@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <!-- Additional custom CSS -->
     </link rel="stylesheet" href="/stylesheets/inventoryStyle.css">
 
 </head>
@@ -103,7 +104,7 @@
                                 <%= inventory[i].item %>
                             </td>
                             <td>
-                                <%= inventory[i].time %>
+                                <%= inventory[i].timeFormatted %>
                             </td>
                             <td>
                                 <%= inventory[i].difficulty %>
@@ -113,10 +114,11 @@
                             </td>
 
                             <td>
-                                <a class="btn-small waves-effect waves-light" href=<%="/inventory/todos/" +
+                                <a class="btn-small waves-effect waves-light" href=<%="/inventory/<%= inventory[i].assignmentId %>" +
                                     inventory[i].id %> ><i class="material-icons right">edit</i>Info/Edit</a>
                                 <a class="btn-small waves-effect waves-light red"
-                                    href="/inventory/todos/<%= inventory[i].id %>/delete"><i
+                                    href="/inventory/<%= inventory[i].assignmentId %>/delete">
+                                    <!-- got rid of /todos/ -->
                                         class="material-icons right">delete</i>Delete</a>
                             </td>
                         </tr>
@@ -234,8 +236,8 @@
                                     <!-- <input type="name" name="quantity" id="quantityInput" value=1 required> -->
                             </div>
                             <div class="input-field col s6">
-                                <input type="text" name="difficulty" id="quantityInput" value=1 required>
-                                <label for="quantityInput">Difficulty</label>
+                                <input type="text" name="difficulty" id="quantityInput" class="validate" min=1 max=10 value=5 required>
+                                <label for="quantityInput">Difficulty (1:10):</label>
                                 <!-- Dropdown Trigger -->
                                 <!-- <br></br>
                                                 <a class='dropdown-trigger btn' href='#dropdown1'>Choose</a>
@@ -253,6 +255,24 @@
                             <div class="input-field col s6">
                                 <input type="url" name="instructions" id="instructionsInput" >
                                 <label for="instructionsInput">Instructions</label>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <select id="categoryInput" name="categoryInput" required>
+                                        <option value="" disabled selected>Choose your subject</option>
+                                        <% for (let i = 0; i < categoryList.length; i++) { %>
+                                            <option value=<%=categoryList[i].categoryId %>><%= categoryList[i].categoryName %></option>
+                                        <% } %>
+                                    </select>
+                                    <label for="categoryInput">Category:</label>
+                                </div>
+            
+                                <div class="input-field col s6">
+                                    <input type="date" id="dueDateInput" name="dueDate">
+                                    <label for="dueDateInput">Due Date:</label>
+                                </div>
+            
                             </div>
                         </div>
                         <button class="btn waves-effect waves-light" type="submit">

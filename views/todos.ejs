@@ -93,31 +93,31 @@
         <table>
             <tr>
                 <th>Item:</th>
-                <td><%= item %></td>
+                <td><%= inventory.item %></td>
             </tr>
             <tr>
                 <th>Time:</th>
-                <td><%= time %></td>
+                <td><%= inventory.time %></td>
 
             </tr>
             <tr>
                 <th>Difficulty:</th>
-                <td><%= difficulty %></td>
+                <td><%= inventory.difficulty %></td>
 
             </tr>
             <tr>
                 <th>Instructions:</th>
-                <td><%= instructions %></td>
+                <td><%= inventory.instructions %></td>
 
             </tr>
             <tr>
                 <th>Key Focus Area(s):</th>
-                <td><%= keyfocusarea %></td>
+                <td><%= inventory.keyfocusarea %></td>
             </tr>
             <tr>
                 <th>Description:</th>
                 <td>
-                    <%= description %>
+                    <%= inventory.description %>
                 </td>
             </tr>
         </table>
@@ -242,7 +242,7 @@
                 <i class="material-icons right">edit</i>
                 Edit
             </button>
-            <a class="btn-large waves-effect waves-light red right" href="/inventory/todos/<%= id %>/delete">
+            <a class="btn-large waves-effect waves-light red right" href="/inventory/<%= inventory.id %>/delete">
                 <i class="material-icons right">delete</i>
                 Delete
             </a>
@@ -269,7 +269,7 @@
                                     <!-- <input type="name" name="quantity" id="quantityInput" value=1 required> -->
                             </div>
                             <div class="input-field col s6">
-                                <input type="text" name="difficulty" id="quantityInput" value=1 required>
+                                <input type="text" name="difficulty" class="validate" min=1 max=10 value=<%= inventory.difficulty %>
                                 <label for="quantityInput">Difficulty</label>
                                 <!-- Dropdown Trigger -->
                                 <!-- <br></br>
@@ -286,15 +286,15 @@
 
                             </div>
                             <div class="input-field col s6">
-                                <input type="url" name="instructions" id="instructionsInput" >
+                                <input type="url" name="instructions" id="instructionsInput" value=<%= inventory.Instructions %>>
                                 <label for="instructionsInput">Instructions</label>
                             </div>
                             <div class="input-field col s6">
-                                <input type="text" name="keyfocusarea" id="keyfocusareaInput" >
+                                <input type="text" name="keyfocusarea" id="keyfocusareaInput" value=<%= inventory.keyfocusareaInput %> >
                                 <label for="keyfocusareaInput">Key Focus Area(s)</label>
                             </div>
                             <div class="input-field col s6">
-                                <input type="text" name="description" id="descriptionInput" >
+                                <input type="text" name="description" id="descriptionInput" value=<%= inventory.description %>>
                                 <label for="descriptionInput">Description</label>
                             </div>
                         </div>
