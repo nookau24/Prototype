@@ -1,4 +1,4 @@
-INSERT INTO inventory
+INSERT INTO assignments
     (item, time, difficulty, instructions)
 VALUES
     (?, ?, ?, ?)

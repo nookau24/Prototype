@@ -1,6 +1,6 @@
 DELETE 
 FROM
-    inventory
+    assignments
 WHERE
     assignmentId = ?
 AND

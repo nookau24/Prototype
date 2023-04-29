@@ -1,5 +1,5 @@
 UPDATE
-    inventory
+    assignemnts
 SET
     item = ?,
     time = ?,
@@ -9,4 +9,6 @@ SET
     description
 
 WHERE
+    assignmentId = ?
+AND
     id = ?
